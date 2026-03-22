@@ -39,6 +39,14 @@ nav a:hover {
   margin: 40px auto;
 }
 
+.panel {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+
 button {
   margin-top: 10px;
   padding: 10px 16px;
@@ -72,15 +80,25 @@ input, select {
   margin-bottom: 10px;
 }
 
-.panel {
+select {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
   background-color: #ffffff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  margin-bottom: 30px;
+  font-size: 14px;
+  appearance: none;
+  cursor: pointer;
 }
 
-/* Flex panel for GPA with side scale */
+/* subtle custom dropdown arrow */
+select {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%233e2f1c' height='20' viewBox='0 0 24 24' width='20'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+}
+
 .flex-panel {
   display: flex;
   gap: 30px;
@@ -93,62 +111,7 @@ input, select {
 .side {
   flex: 1;
   background-color: #f0ede4;
-  padding: 20px;
-  border-radius: 10px;
-  font-size: 16px; /* larger */
-  font-family: 'Inter', sans-serif;
-}
-
-/* Class rows */
-.class-row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 10px;
-}
-
-select {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: #ffffff;
-  font-size: 14px;
-  appearance: none;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-}
-
-select:invalid {
-  color: #999;
-}
-
-/* Custom arrow */
-select {
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%233e2f1c' height='20' viewBox='0 0 24 24' width='20'><path d='M7 10l5 5 5-5z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 16px;
-}
-
-/* Category panel */
-.category {
-  border: 1px solid #ccc;
-  border-radius: 10px;
   padding: 15px;
-  margin-bottom: 15px;
-  background-color: #f9f8f5;
-}
-
-/* Assignment row */
-.assignment-row {
-  display: flex;
-  gap: 10px;
-  margin: 5px 0;
-}
-
-.assignment-row input {
-  width: 100px;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
 }
