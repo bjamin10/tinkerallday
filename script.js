@@ -52,7 +52,7 @@ function calculateGPA() {
     let grade = parseFloat(grades[i].value);
     let weight = parseFloat(weights[i].value);
 
-    total += grade * (weight === "1" ? 2 : (weight === "0.5" ? 1.5 : 1));
+    total += grade + weight;
   }
 
   let gpa = total / grades.length;
