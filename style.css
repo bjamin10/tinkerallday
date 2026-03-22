@@ -114,6 +114,7 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  padding-right: 35px;
 }
 
 .class-row > select {
@@ -167,7 +168,8 @@ select option:checked {
 
 .class-remove-btn {
   position: absolute;
-  top: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   right: 8px;
   z-index: 10;
   width: 24px;
@@ -202,4 +204,9 @@ select option:checked {
 .simulator-panel {
   max-width: 900px;
   margin: 30px auto;
+}
+
+.simulator-panel button {
+  padding: 8px 12px;
+  background-color: #6a994e;
 }
