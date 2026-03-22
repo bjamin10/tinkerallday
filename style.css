@@ -190,7 +190,7 @@ select option:checked {
   transition: background-color 0.2s;
 }
 
-.class-container:hover{
+.class-container:hover .class-remove-btn{
   display: flex;
 }
 
