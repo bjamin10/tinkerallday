@@ -51,32 +51,20 @@
   </div>
 </div>
 
-<div class="panel" id="simulatorPanel">
+<div class="panel">
   <h2>Grade Simulator</h2>
 
-  <div id="categories"></div>
+  <input type="number" id="current" placeholder="Current Grade (%)">
+  <input type="number" id="score" placeholder="Assignment Score (%)">
+  <input type="number" id="weight" placeholder="Weight (0-1)">
 
-  <input type="text" id="newCategory" placeholder="New Category (e.g. Homework)">
-  <input type="number" id="newWeight" placeholder="Weight (0-1)">
-  <button onclick="addCategory()">Add Category</button>
-
-  <h3>Add Assignment</h3>
-  <select id="assignmentCategory">
-    <option value="" disabled selected>Select Category</option>
-  </select>
-  <input type="number" id="pointsPossible" placeholder="Points Possible">
-  <input type="number" id="pointsReceived" placeholder="Points Received">
-  <button onclick="addAssignment()">Add Assignment</button>
+  <button onclick="simulate()">Calculate</button>
 
   <h3 id="simResult"></h3>
 </div>
 
 </div>
-<script>
-  for(let i=0;i<7;i++){
-    addClass();
-  }
-</script>
+
 <script src="script.js"></script>
 </body>
 </html>
