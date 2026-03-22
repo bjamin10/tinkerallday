@@ -170,7 +170,7 @@ select option:checked {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 8px;
+  right: -35px;
   z-index: 10;
   width: 24px;
   height: 24px;
