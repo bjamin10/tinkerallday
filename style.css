@@ -170,7 +170,7 @@ select option:checked {
 .class-remove-btn {
   position: absolute;
   top: 50%;
-  transform: translateY(0%);
+  transform: translateY(50%);
   right: 12px;
   z-index: 10;
   width: 24px;
@@ -190,7 +190,7 @@ select option:checked {
   transition: background-color 0.2s;
 }
 
-.class-container:hover .class-remove-btn {
+.class-container:hover{
   display: flex;
 }
 
