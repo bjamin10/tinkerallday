@@ -7,7 +7,7 @@ function addClass() {
 
   div.className = "class-container";
   div.id = classId;
-  div.innerHTML = `
+    div.innerHTML = `
   <div class="class-row">
     <input type="text" class="class-name" placeholder="Class 1" value="Class ${classCount}" style="width: 120px; margin-right: 10px;">
     
@@ -33,7 +33,7 @@ function addClass() {
       <option value="1">AP</option>
     </select>
 
-    <button class="remove-btn" onclick="removeClassRow('${classId}')" style="display: none; background-color: #c94c4c; padding: 8px 12px; margin-left: 10px;">Remove</button>
+    <button class="remove-btn" onclick="removeClassRow('${classId}')" style="display: none; background-color: #c94c4c; padding: 8px 12px;">Remove</button>
   </div>
 `;
 
