@@ -157,8 +157,6 @@ select option:checked {
 
 .class-container {
   position: relative;
-  display: flex;
-  align-items: center;
 }
 
 .remove-btn {
@@ -172,7 +170,7 @@ select option:checked {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: -6px;
+  right: 8px;
   z-index: 10;
   width: 24px;
   height: 24px;
