@@ -51,20 +51,20 @@
   </div>
 </div>
 
+</div>
+
 <div class="panel">
   <h2>Grade Simulator</h2>
-
-  <input type="number" id="current" placeholder="Current Grade (%)">
-  <input type="number" id="score" placeholder="Assignment Score (%)">
-  <input type="number" id="weight" placeholder="Weight (0-1)">
-
-  <button onclick="simulate()">Calculate</button>
-
-  <h3 id="simResult"></h3>
+  <p style="font-size: 14px; color: #666;">Add categories with weights, then track assignments to see your grade in real-time.</p>
+  <div id="simulatorContainer"></div>
 </div>
 
-</div>
-
+<script>
+  // Initialize simulator on page load
+  window.addEventListener("DOMContentLoaded", function() {
+    renderSimulator();
+  });
+</script>
 <script src="script.js"></script>
 </body>
 </html>
