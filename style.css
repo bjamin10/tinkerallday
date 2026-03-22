@@ -76,33 +76,49 @@ input, select {
 }
 
 .class-name {
-  display: inline-block !important;
-  width: auto !important;
-  max-width: none !important;
-  margin: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 10px 0 !important;
+  padding: 10px !important;
   font-size: 14px !important;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
 .class-row {
   display: flex;
-  gap: 15px;
-  margin-bottom: 10px;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.class-row > select {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
 }
 
 select {
-  flex: 1;
-  padding: 10px 35px 10px 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: #ffffff;
-  font-size: 14px;
-  appearance: none;
-  cursor: pointer;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%236a994e' height='20' viewBox='0 0 24 24' width='20'><path d='M7 10l5 5 5-5z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 18px;
-  padding-right: 35px;
+  padding: 10px 30px 10px 10px !important;
+  border-radius: 8px !important;
+  border: 1px solid #ccc !important;
+  background-color: #ffffff !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%236a994e' height='16' viewBox='0 0 24 24' width='16'><path d='M7 10l5 5 5-5z'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 8px center !important;
+  background-size: 16px !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+select::-webkit-outer-spin-button,
+select::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 select:hover {
@@ -145,6 +161,32 @@ select option:checked {
   top: 5px;
   right: 5px;
   z-index: 10;
+}
+
+.class-remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(201, 76, 76, 0.8);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: none !important;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background-color 0.2s;
+}
+
+.class-remove-btn:hover {
+  background-color: rgba(201, 76, 76, 1);
 }
 
 .side {

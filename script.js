@@ -33,16 +33,16 @@ function addClass() {
       <option value="1">AP</option>
     </select>
 
-    <button class="remove-btn" onclick="removeClassRow('${classId}')" style="display: none; background-color: #c94c4c; padding: 8px 12px;">Remove</button>
+    <button class="class-remove-btn" onclick="removeClassRow('${classId}')" style="display: none;">✕</button>
   </div>
 `;
 
   const classContainer = div;
   classContainer.addEventListener("mouseenter", function() {
-    this.querySelector(".remove-btn").style.display = "block";
+    this.querySelector(".class-remove-btn").style.display = "flex";
   });
   classContainer.addEventListener("mouseleave", function() {
-    this.querySelector(".remove-btn").style.display = "none";
+    this.querySelector(".class-remove-btn").style.display = "none";
   });
 
   document.getElementById("classes").appendChild(div);
