@@ -63,7 +63,7 @@ button:hover {
   opacity: 0.85;
 }
 
-input, select {
+input {
   display: block;
   width: 100%;
   max-width: 300px;
@@ -100,11 +100,16 @@ input, select {
 }
 
 select {
+  display: block !important;
+  width: 100% !important;
+  max-width: 300px !important;
+  margin: 10px 0 !important;
   padding: 10px 30px 10px 10px !important;
   border-radius: 8px !important;
   border: 1px solid #ccc !important;
   background-color: #ffffff !important;
   font-size: 14px !important;
+  font-family: 'Inter', sans-serif !important;
   cursor: pointer !important;
   background-image: url("data:image/svg+xml;utf8,<svg fill='%236a994e' height='16' viewBox='0 0 24 24' width='16'><path d='M7 10l5 5 5-5z'/></svg>") !important;
   background-repeat: no-repeat !important;
@@ -115,21 +120,15 @@ select {
   appearance: none !important;
 }
 
-select::-webkit-outer-spin-button,
-select::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 select:hover {
-  border-color: #a3b18a;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-color: #a3b18a !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
 }
 
 select:focus {
-  outline: none;
-  border-color: #6a994e;
-  box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1);
+  outline: none !important;
+  border-color: #6a994e !important;
+  box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important;
 }
 
 select option {

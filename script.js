@@ -33,7 +33,7 @@ function addClass() {
       <option value="1">AP</option>
     </select>
 
-    <button class="class-remove-btn" onclick="removeClassRow('${classId}')" style="display: none;">✕</button>
+    <button class="class-remove-btn" onclick="removeClassRow('${classId}')">✕</button>
   </div>
 `;
 
