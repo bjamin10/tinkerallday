@@ -19,15 +19,36 @@
 
 <div class="container">
 
-  <div class="panel">
-  <h2>GPA Calculator</h2>
+  <div class="panel flex-panel">
 
-  <div id="classes"></div>
+  <div class="main">
+    <h2>GPA Calculator</h2>
 
-  <button onclick="addClass()">Add Class</button>
-  <button onclick="calculateGPA()">Calculate GPA</button>
+    <div id="classes"></div>
 
-  <h3 id="gpaResult"></h3>
+    <button onclick="addClass()">Add Class</button>
+    <button onclick="calculateGPA()">Calculate GPA</button>
+
+    <h3 id="gpaResult"></h3>
+  </div>
+
+  <div class="side">
+    <h3>Grade Scale</h3>
+    <ul>
+      <li>A: 93–100</li>
+      <li>A-: 90–92</li>
+      <li>B+: 87–89</li>
+      <li>B: 83–86</li>
+      <li>B-: 80–82</li>
+      <li>C+: 77–79</li>
+      <li>C: 73–76</li>
+      <li>C-: 70–72</li>
+      <li>D+: 67–69</li>
+      <li>D: 60–66</li>
+      <li>F: 50–59</li>
+    </ul>
+  </div>
+  </div>
 </div>
 
 <div class="panel">

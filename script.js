@@ -2,11 +2,19 @@ function addClass() {
   const div = document.createElement("div");
 
   div.innerHTML = `
+  <div class="class-row">
+
     <select class="grade">
-      <option value="4">A</option>
-      <option value="3">B</option>
-      <option value="2">C</option>
-      <option value="1">D</option>
+      <option value="4.0">A</option>
+      <option value="3.7">A-</option>
+      <option value="3.3">B+</option>
+      <option value="3.0">B</option>
+      <option value="2.7">B-</option>
+      <option value="2.3">C+</option>
+      <option value="2.0">C</option>
+      <option value="1.7">C-</option>
+      <option value="1.3">D+</option>
+      <option value="1.0">D</option>
       <option value="0">F</option>
     </select>
 
@@ -15,7 +23,9 @@ function addClass() {
       <option value="0.5">Honors</option>
       <option value="1">AP</option>
     </select>
-  `;
+
+  </div>
+`;
 
   document.getElementById("classes").appendChild(div);
 }

@@ -73,3 +73,45 @@ input, select {
   border: 1px solid #ccc;
   font-family: 'Inter', sans-serif;
 }
+
+.class-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+select {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  font-size: 14px;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* subtle custom dropdown arrow */
+select {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%233e2f1c' height='20' viewBox='0 0 24 24' width='20'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+}
+
+.flex-panel {
+  display: flex;
+  gap: 30px;
+}
+
+.main {
+  flex: 2;
+}
+
+.side {
+  flex: 1;
+  background-color: #f0ede4;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 14px;
+}
