@@ -1,10 +1,18 @@
-function addClass() {
-  const div = document.createElement("div");
+let classCount = 0;
 
+function addClass() {
+  classCount++;
+  const div = document.createElement("div");
+  const classId = "class-" + classCount;
+
+  div.className = "class-container";
+  div.id = classId;
   div.innerHTML = `
   <div class="class-row">
-
-    <select class="grade">
+    <input type="text" class="class-name" placeholder="Class 1" value="Class ${classCount}" style="width: 120px; margin-right: 10px;">
+    
+    <select class="grade" onchange="updateGPA()">
+      <option value="">Grade</option>
       <option value="4.0">A</option>
       <option value="3.7">A-</option>
       <option value="3.3">B+</option>
@@ -18,30 +26,46 @@ function addClass() {
       <option value="0">F</option>
     </select>
 
-    <select class="weight">
+    <select class="weight" onchange="updateGPA()">
+      <option value="">Class Type</option>
       <option value="0">Regular</option>
       <option value="0.5">Honors</option>
       <option value="1">AP</option>
     </select>
 
+    <button class="remove-btn" onclick="removeClassRow('${classId}')" style="display: none; background-color: #c94c4c; padding: 8px 12px; margin-left: 10px;">Remove</button>
   </div>
 `;
 
+  const classContainer = div;
+  classContainer.addEventListener("mouseenter", function() {
+    this.querySelector(".remove-btn").style.display = "block";
+  });
+  classContainer.addEventListener("mouseleave", function() {
+    this.querySelector(".remove-btn").style.display = "none";
+  });
+
   document.getElementById("classes").appendChild(div);
+  updateGPA();
 }
 
-function calculateGPA() {
+function removeClassRow(classId) {
+  document.getElementById(classId).remove();
+  updateGPA();
+}
+
+function updateGPA() {
   let grades = document.querySelectorAll(".grade");
   let weights = document.querySelectorAll(".weight");
 
   if (grades.length === 0) {
-    document.getElementById("gpaResult").innerText = "Please add at least one class";
+    document.getElementById("gpaResult").innerText = "";
     return;
   }
 
   for (let i = 0; i < grades.length; i++) {
     if (grades[i].value === "" || weights[i].value === "") {
-      document.getElementById("gpaResult").innerText = "Please fill in all grades and weights";
+      document.getElementById("gpaResult").innerText = "";
       return;
     }
   }
@@ -184,7 +208,8 @@ function calculateSimulatedGrade() {
 }
 
 window.addEventListener("DOMContentLoaded", function() {
-  for (let i = 0; i < 6; i++) {
+  classCount = 0;
+  for (let i = 0; i < 7; i++) {
     addClass();
   }
 });
