@@ -37,14 +37,6 @@ function addClass() {
   </div>
 `;
 
-  const classContainer = div;
-  classContainer.addEventListener("mouseenter", function() {
-    this.querySelector(".class-remove-btn").style.display = "flex";
-  });
-  classContainer.addEventListener("mouseleave", function() {
-    this.querySelector(".class-remove-btn").style.display = "none";
-  });
-
   document.getElementById("classes").appendChild(div);
   updateGPA();
 }
