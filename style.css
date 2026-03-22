@@ -9,9 +9,9 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  background-color: #3e2f1c;
-  color: white;
+  padding: 12px 30px; /* smaller */
+  background-color: #a3b18a; /* sage green */
+  color: #2f3e2c;
 }
 
 nav a {
