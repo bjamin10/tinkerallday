@@ -11,27 +11,30 @@ function addClass() {
   <div class="class-row">
     <input type="text" class="class-name" placeholder="Class 1" value="Class ${classCount}" style="width: 120px; margin-right: 10px;">
     
-    <select class="grade" onchange="updateGPA()">
-      <option value="">Grade</option>
-      <option value="4.0">A</option>
-      <option value="3.7">A-</option>
-      <option value="3.3">B+</option>
-      <option value="3.0">B</option>
-      <option value="2.7">B-</option>
-      <option value="2.3">C+</option>
-      <option value="2.0">C</option>
-      <option value="1.7">C-</option>
-      <option value="1.3">D+</option>
-      <option value="1.0">D</option>
-      <option value="0">F</option>
-    </select>
-
-    <select class="weight" onchange="updateGPA()">
-      <option value="">Class Type</option>
-      <option value="0">Regular</option>
-      <option value="0.5">Honors</option>
-      <option value="1">AP</option>
-    </select>
+    <div class="custom-dropdown grade-dropdown" tabindex="0" data-type="grade">
+      <div class="selected">Grade</div>
+      <div class="dropdown-options" style="display:none;">
+        <div data-value="4.0">A</div>
+        <div data-value="3.7">A-</div>
+        <div data-value="3.3">B+</div>
+        <div data-value="3.0">B</div>
+        <div data-value="2.7">B-</div>
+        <div data-value="2.3">C+</div>
+        <div data-value="2.0">C</div>
+        <div data-value="1.7">C-</div>
+        <div data-value="1.3">D+</div>
+        <div data-value="1.0">D</div>
+        <div data-value="0">F</div>
+      </div>
+    </div>
+    <div class="custom-dropdown class-dropdown" tabindex="0" data-type="weight">
+      <div class="selected">Class Type</div>
+      <div class="dropdown-options" style="display:none;">
+        <div data-value="0">Regular</div>
+        <div data-value="0.5">Honors</div>
+        <div data-value="1">AP</div>
+      </div>
+    </div>
 
     <button class="class-remove-btn" onclick="removeClassRow('${classId}')">✕</button>
   </div>
@@ -205,3 +208,73 @@ window.addEventListener("DOMContentLoaded", function() {
     addClass();
   }
 });
+
+// Custom dropdown handler
+document.addEventListener('click', function(e) {
+  // Close all dropdowns if clicking outside
+  if (!e.target.closest('.custom-dropdown')) {
+    document.querySelectorAll('.custom-dropdown .dropdown-options').forEach(opt => opt.style.display = 'none');
+  }
+});
+
+document.addEventListener('focusin', function(e) {
+  if (e.target.closest('.custom-dropdown')) {
+    closeAllDropdowns(e.target.closest('.custom-dropdown'));
+  }
+});
+
+function closeAllDropdowns(except) {
+  document.querySelectorAll('.custom-dropdown').forEach(drop => {
+    if (drop !== except) {
+      drop.querySelector('.dropdown-options').style.display = 'none';
+    }
+  });
+}
+
+document.addEventListener('click', function(e) {
+  // Show/hide dropdown
+  const dropdown = e.target.closest('.custom-dropdown');
+  if (dropdown && e.target.classList.contains('selected')) {
+    const options = dropdown.querySelector('.dropdown-options');
+    options.style.display = (options.style.display === 'none' ? 'block' : 'none');
+  }
+  // Handle selection
+  if (dropdown && e.target.hasAttribute('data-value')) {
+    let type = dropdown.dataset.type;
+    let value = e.target.getAttribute('data-value');
+    let text = e.target.textContent;
+    dropdown.querySelector('.selected').textContent = text;
+    dropdown.setAttribute('data-selected-value', value);
+    dropdown.querySelector('.dropdown-options').style.display = 'none';
+    updateGPA();
+  }
+});
+
+// Modify updateGPA to work with custom dropdowns
+function updateGPA() {
+  let grades = document.querySelectorAll('.grade-dropdown');
+  let weights = document.querySelectorAll('.class-dropdown');
+
+  if (grades.length === 0) {
+    document.getElementById("gpaResult").innerText = "";
+    return;
+  }
+
+  for (let i = 0; i < grades.length; i++) {
+    if (!grades[i].getAttribute("data-selected-value") || !weights[i].getAttribute("data-selected-value")) {
+      document.getElementById("gpaResult").innerText = "";
+      return;
+    }
+  }
+
+  let total = 0;
+  for (let i = 0; i < grades.length; i++) {
+    let grade = parseFloat(grades[i].getAttribute("data-selected-value") || 0);
+    let weight = parseFloat(weights[i].getAttribute("data-selected-value") || 0);
+
+    total += grade + weight;
+  }
+
+  let gpa = total / grades.length;
+  document.getElementById("gpaResult").innerText = "GPA: " + gpa.toFixed(2);
+}
