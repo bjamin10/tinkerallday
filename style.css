@@ -100,24 +100,27 @@ input {
 }
 
 select {
-  display: block !important;
-  width: 100% !important;
-  max-width: 300px !important;
-  margin: 10px 0 !important;
-  padding: 10px 30px 10px 10px !important;
-  border-radius: 8px !important;
-  border: 1px solid #ccc !important;
-  background-color: #ffffff !important;
-  font-size: 14px !important;
-  font-family: 'Inter', sans-serif !important;
-  cursor: pointer !important;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%236a994e' height='16' viewBox='0 0 24 24' width='16'><path d='M7 10l5 5 5-5z'/></svg>") !important;
-  background-repeat: no-repeat !important;
-  background-position: right 8px center !important;
-  background-size: 16px !important;
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
-  appearance: none !important;
+  padding: 10px 30px 10px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%236a994e' height='16' viewBox='0 0 24 24' width='16'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.class-row > select {
+  display: flex;
+  flex: 1;
+  width: auto;
+  margin: 0;
 }
 
 select:hover {
@@ -177,15 +180,15 @@ select option:checked {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  display: none !important;
+  display: none;
   align-items: center;
   justify-content: center;
   line-height: 1;
   transition: background-color 0.2s;
 }
 
-.class-remove-btn:hover {
-  background-color: rgba(201, 76, 76, 1);
+.class-container:hover .class-remove-btn {
+  display: flex;
 }
 
 .side {
