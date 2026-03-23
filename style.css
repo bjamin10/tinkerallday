@@ -225,7 +225,7 @@ select option:checked {
   background: #fff;
   border: 1px solid #dedede;
   border-radius: 8px;
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 100%;
