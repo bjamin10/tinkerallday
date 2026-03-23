@@ -89,6 +89,11 @@ input {
   overflow: visible;
 }
 
+.class-row.active {
+  position: relative;
+  z-index: 9999;
+}
+
 .class-name {
   display: inline-block !important;
   width: 150px !important;

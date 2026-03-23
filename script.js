@@ -202,20 +202,49 @@ function closeAllDropdowns(except) {
 }
 
 document.addEventListener('click', function(e) {
-  // Show/hide dropdown
   const dropdown = e.target.closest('.custom-dropdown');
+
+  // CLICK ON DROPDOWN BUTTON
   if (dropdown && e.target.classList.contains('selected')) {
     const options = dropdown.querySelector('.dropdown-options');
-    options.style.display = (options.style.display === 'none' ? 'block' : 'none');
+    const row = dropdown.closest('.class-row');
+
+    // Close everything first
+    document.querySelectorAll('.class-row').forEach(r => r.classList.remove('active'));
+    document.querySelectorAll('.custom-dropdown .dropdown-options').forEach(opt => opt.style.display = 'none');
+
+    const isOpen = options.style.display === 'block';
+
+    if (!isOpen) {
+      row.classList.add('active'); // 🔥 THIS FIXES YOUR ISSUE
+      options.style.display = 'block';
+    } else {
+      options.style.display = 'none';
+    }
+    return;
   }
-  // Handle selection
+
+  // CLICK OPTION
   if (dropdown && e.target.hasAttribute('data-value')) {
     let value = e.target.getAttribute('data-value');
     let text = e.target.textContent;
+
     dropdown.querySelector('.selected').textContent = text;
     dropdown.setAttribute('data-selected-value', value);
     dropdown.querySelector('.dropdown-options').style.display = 'none';
+
+    // remove active state after selection
+    const row = dropdown.closest('.class-row');
+    if (row) row.classList.remove('active');
+
     updateGPA();
+    return;
+  }
+
+  // CLICK OUTSIDE → CLOSE EVERYTHING
+  if (!e.target.closest('.custom-dropdown')) {
+    document.querySelectorAll('.dropdown-options').forEach(opt => opt.style.display = 'none');
+    document.querySelectorAll('.class-row').forEach(r => r.classList.remove('active'));
   }
 });
 
