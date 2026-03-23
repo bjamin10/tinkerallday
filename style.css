@@ -45,6 +45,7 @@ nav a:hover {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   margin-bottom: 30px;
+  overflow: visible;
 }
 
 button {
@@ -57,6 +58,7 @@ button {
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
+  z-index: 0;
 }
 
 button:hover {
@@ -221,11 +223,11 @@ select option:checked {
   color: #3e2f1c;
 }
 .custom-dropdown .dropdown-options {
+  position: absolute;
   margin-top: 2px;
   background: #fff;
   border: 1px solid #dedede;
   border-radius: 8px;
-  position: absolute;
   left: 0;
   right: 0;
   top: 100%;
