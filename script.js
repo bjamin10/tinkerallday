@@ -216,7 +216,7 @@ document.addEventListener('click', function(e) {
     const isOpen = options.style.display === 'block';
 
     if (!isOpen) {
-      row.classList.add('active'); // 🔥 THIS FIXES YOUR ISSUE
+      row.classList.add('active');
       options.style.display = 'block';
     } else {
       options.style.display = 'none';
