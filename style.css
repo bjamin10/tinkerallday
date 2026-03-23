@@ -46,6 +46,7 @@ nav a:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   margin-bottom: 30px;
   overflow: visible;
+  z-index: 0;
 }
 
 button {
@@ -214,7 +215,7 @@ select option:checked {
   border: 1px solid #ccc;
   font-size: 14px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 9000;
 }
 .custom-dropdown .selected {
   padding: 10px;
@@ -232,7 +233,7 @@ select option:checked {
   right: 0;
   top: 100%;
   box-shadow: 0 2px 8px 0 rgba(30,30,60,0.07);
-  z-index: 1001;
+  z-index: 10000;
   display: none;
   max-height: 220px;
   overflow-y: auto;
