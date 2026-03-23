@@ -171,7 +171,7 @@ select option:checked {
 .class-remove-btn {
   position: absolute;
   top: 50%;
-  transform: translateY(-86%);
+  transform: translateY(-87%);
   right: 5px;
   z-index: 1;
   width: 24px;
