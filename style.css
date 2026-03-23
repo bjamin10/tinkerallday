@@ -203,6 +203,7 @@ select option:checked {
 }
 
 .custom-dropdown {
+  position: relative;
   width: 140px;
   user-select: none;
   margin-right: 10px;
