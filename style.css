@@ -84,11 +84,6 @@ input {
   z-index: 1;
 }
 
-.class-row > select {
-  flex: 1;
-  width: 100%;
-}
-
 .class-name {
   display: inline-block !important;
   width: 150px !important;
@@ -159,13 +154,6 @@ select option:checked {
 
 .class-container {
   position: relative;
-}
-
-.remove-btn {
-  position: absolute;
-  top: 5px;
-  right: 15px;
-  z-index: 10;
 }
 
 .class-remove-btn {

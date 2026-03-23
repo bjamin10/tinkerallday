@@ -49,36 +49,6 @@ function removeClassRow(classId) {
   updateGPA();
 }
 
-function updateGPA() {
-  let grades = document.querySelectorAll(".grade");
-  let weights = document.querySelectorAll(".weight");
-
-  if (grades.length === 0) {
-    document.getElementById("gpaResult").innerText = "";
-    return;
-  }
-
-  for (let i = 0; i < grades.length; i++) {
-    if (grades[i].value === "" || weights[i].value === "") {
-      document.getElementById("gpaResult").innerText = "";
-      return;
-    }
-  }
-
-  let total = 0;
-
-  for (let i = 0; i < grades.length; i++) {
-    let grade = parseFloat(grades[i].value);
-    let weight = parseFloat(weights[i].value);
-
-    total += grade + weight;
-  }
-
-  let gpa = total / grades.length;
-
-  document.getElementById("gpaResult").innerText = "GPA: " + gpa.toFixed(2);
-}
-
 let categories = {};
 
 function addCategory() {
@@ -240,7 +210,6 @@ document.addEventListener('click', function(e) {
   }
   // Handle selection
   if (dropdown && e.target.hasAttribute('data-value')) {
-    let type = dropdown.dataset.type;
     let value = e.target.getAttribute('data-value');
     let text = e.target.textContent;
     dropdown.querySelector('.selected').textContent = text;
