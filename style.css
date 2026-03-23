@@ -164,14 +164,14 @@ select option:checked {
 .remove-btn {
   position: absolute;
   top: 5px;
-  right: -15px;
+  right: -35px;
   z-index: 10;
 }
 
 .class-remove-btn {
   position: absolute;
   top: 50%;
-  transform: translateY(-87%);
+  transform: translateY(-86%);
   right: 25px;
   z-index: 1;
   width: 24px;
