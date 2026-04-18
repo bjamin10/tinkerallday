@@ -26,7 +26,10 @@
   <div class="panel flex-panel">
 
   <div class="main">
-    <h2>GPA Calculator</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>GPA Calculator</h2>
+      <button onclick="resetGPACalculator()" class="reset-btn">Reset</button>
+    </div>
 
     <div id="classes"></div>
 
@@ -54,8 +57,15 @@
   </div>
 
   <div class="panel simulator-panel">
-    <h2>Class Grade Calculator</h2>
-    <p style="font-size: 14px; color: #666;">Add categories with weights, then track assignments to see your grade in real-time.</p>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>Class Grade Calculator</h2>
+      <button onclick="resetSimulator()" class="reset-btn">Reset</button>
+    </div>
+    
+    <div style="background-color: #f9f7f2; padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #a3b18a;">
+      <p style="margin: 0; font-size: 14px; color: #555;"><strong>How to use:</strong> Add categories (like Homework, Tests, Projects) with their weight percentages. Then track your assignment scores in each category to see your overall grade update in real-time. The progress bars show your current percentage in each category.</p>
+    </div>
+    
     <div id="simulatorContainer"></div>
   </div>
 

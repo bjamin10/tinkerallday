@@ -1,5 +1,31 @@
 let classCount = 0;
 
+// localStorage helpers
+function saveGPAData() {
+  const gpaData = [];
+  document.querySelectorAll('.class-container').forEach(container => {
+    const name = container.querySelector('.class-name').value;
+    const grade = container.querySelector('.grade-dropdown').getAttribute('data-selected-value') || '';
+    const weight = container.querySelector('.class-dropdown').getAttribute('data-selected-value') || '';
+    gpaData.push({ name, grade, weight });
+  });
+  localStorage.setItem('gpaData', JSON.stringify(gpaData));
+}
+
+function loadGPAData() {
+  const saved = localStorage.getItem('gpaData');
+  return saved ? JSON.parse(saved) : null;
+}
+
+function saveSimulatorData() {
+  localStorage.setItem('simulatorData', JSON.stringify(categories));
+}
+
+function loadSimulatorData() {
+  const saved = localStorage.getItem('simulatorData');
+  return saved ? JSON.parse(saved) : {};
+}
+
 function addClass() {
   classCount++;
   const div = document.createElement("div");
@@ -9,7 +35,7 @@ function addClass() {
   div.id = classId;
     div.innerHTML = `
   <div class="class-row">
-    <input type="text" class="class-name" placeholder="Class 1" value="Class ${classCount}" style="width: 120px; margin-right: 10px;">
+    <input type="text" class="class-name" placeholder="Class 1" value="Class ${classCount}" style="width: 120px; margin-right: 10px;" onchange="saveGPAData()">
     
     <div class="custom-dropdown grade-dropdown" tabindex="0" data-type="grade">
       <div class="selected">Grade</div>
@@ -46,6 +72,17 @@ function addClass() {
 
 function removeClassRow(classId) {
   document.getElementById(classId).remove();
+  saveGPAData();
+  updateGPA();
+}
+
+function resetGPACalculator() {
+  localStorage.removeItem('gpaData');
+  document.getElementById('classes').innerHTML = '';
+  classCount = 0;
+  for (let i = 0; i < 7; i++) {
+    addClass();
+  }
   updateGPA();
 }
 
@@ -66,7 +103,7 @@ function addCategory() {
   }
 
   categories[categoryName] = { weight: categoryWeight, assignments: [] };
-
+  saveSimulatorData();
   document.getElementById("categoryInput").value = "";
   document.getElementById("categoryWeightInput").value = "";
 
@@ -75,21 +112,31 @@ function addCategory() {
 
 function addAssignment(categoryName) {
   categories[categoryName].assignments.push({ points: 0, pointsPossible: 0 });
+  saveSimulatorData();
   renderSimulator();
 }
 
 function updateAssignment(categoryName, index, field, value) {
   categories[categoryName].assignments[index][field] = parseFloat(value) || 0;
+  saveSimulatorData();
   calculateSimulatedGrade();
 }
 
 function removeCategory(categoryName) {
   delete categories[categoryName];
+  saveSimulatorData();
   renderSimulator();
 }
 
 function removeAssignment(categoryName, index) {
   categories[categoryName].assignments.splice(index, 1);
+  saveSimulatorData();
+  renderSimulator();
+}
+
+function resetSimulator() {
+  localStorage.removeItem('simulatorData');
+  categories = {};
   renderSimulator();
 }
 
@@ -100,6 +147,44 @@ function renderSimulator() {
       <input type="text" id="categoryInput" placeholder="Category Name (e.g., Homework, Tests)">
       <input type="number" id="categoryWeightInput" placeholder="Weight (%)" min="0" max="100">
       <button onclick="addCategory()">Add Category</button>
+    </div>
+
+    <div style="margin-bottom: 25px; padding: 15px; background-color: #f9f7f2; border-radius: 8px; border-left: 4px solid #a3b18a;">
+      <h4 style="margin-top: 0;">Category Progress</h4>
+  `;
+
+  let hasCats = Object.keys(categories).length > 0;
+  if (hasCats) {
+    for (let categoryName in categories) {
+      let category = categories[categoryName];
+      let totalPoints = 0;
+      let totalPossible = 0;
+
+      category.assignments.forEach(assignment => {
+        totalPoints += assignment.points;
+        totalPossible += assignment.pointsPossible;
+      });
+
+      let percentage = totalPossible > 0 ? (totalPoints / totalPossible) * 100 : 0;
+      let barColor = percentage >= 90 ? '#6a994e' : percentage >= 80 ? '#a3b18a' : percentage >= 70 ? '#d4a574' : '#c94c4c';
+
+      html += `
+        <div style="margin-bottom: 15px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+            <span style="font-weight: 500;">${categoryName}</span>
+            <span style="font-weight: 600; color: ${barColor};">${percentage.toFixed(1)}%</span>
+          </div>
+          <div style="width: 100%; height: 20px; background-color: #e8e4db; border-radius: 4px; overflow: hidden;">
+            <div style="height: 100%; width: ${percentage}%; background-color: ${barColor}; transition: width 0.3s ease;"></div>
+          </div>
+        </div>
+      `;
+    }
+  } else {
+    html += `<p style="color: #999; font-size: 14px;">Add a category to see progress bars</p>`;
+  }
+
+  html += `
     </div>
   `;
 
@@ -173,11 +258,58 @@ function calculateSimulatedGrade() {
 }
 
 window.addEventListener("DOMContentLoaded", function() {
+  // Load GPA data
   classCount = 0;
-  for (let i = 0; i < 7; i++) {
-    addClass();
+  const gpaData = loadGPAData();
+  
+  if (gpaData && gpaData.length > 0) {
+    gpaData.forEach(classData => {
+      addClass();
+      const lastContainer = document.querySelector('.class-container:last-child');
+      lastContainer.querySelector('.class-name').value = classData.name;
+      
+      if (classData.grade) {
+        const gradeDropdown = lastContainer.querySelector('.grade-dropdown');
+        gradeDropdown.setAttribute('data-selected-value', classData.grade);
+        gradeDropdown.querySelector('.selected').textContent = getGradeLabel(classData.grade);
+      }
+      
+      if (classData.weight) {
+        const weightDropdown = lastContainer.querySelector('.class-dropdown');
+        weightDropdown.setAttribute('data-selected-value', classData.weight);
+        weightDropdown.querySelector('.selected').textContent = getWeightLabel(classData.weight);
+      }
+    });
+  } else {
+    for (let i = 0; i < 7; i++) {
+      addClass();
+    }
+  }
+  
+  updateGPA();
+  
+  // Load simulator data
+  const simData = loadSimulatorData();
+  if (Object.keys(simData).length > 0) {
+    categories = simData;
+    renderSimulator();
+  } else {
+    renderSimulator();
   }
 });
+
+function getGradeLabel(value) {
+  const grades = {
+    '4.0': 'A', '3.7': 'A-', '3.3': 'B+', '3.0': 'B', '2.7': 'B-',
+    '2.3': 'C+', '2.0': 'C', '1.7': 'C-', '1.3': 'D+', '1.0': 'D', '0': 'F'
+  };
+  return grades[value] || 'Grade';
+}
+
+function getWeightLabel(value) {
+  const weights = { '0': 'Regular', '0.5': 'Honors', '1': 'AP' };
+  return weights[value] || 'Class Type';
+}
 
 // Custom dropdown handler
 document.addEventListener('click', function(e) {
@@ -258,21 +390,28 @@ function updateGPA() {
     return;
   }
 
+  let filledCount = 0;
+  let total = 0;
+
+  // Only count classes that have both grade and weight selected
   for (let i = 0; i < grades.length; i++) {
-    if (!grades[i].getAttribute("data-selected-value") || !weights[i].getAttribute("data-selected-value")) {
-      document.getElementById("gpaResult").innerText = "";
-      return;
+    let gradeValue = grades[i].getAttribute("data-selected-value");
+    let weightValue = weights[i].getAttribute("data-selected-value");
+
+    if (gradeValue && weightValue) {
+      let grade = parseFloat(gradeValue);
+      let weight = parseFloat(weightValue);
+      total += grade + weight;
+      filledCount++;
     }
   }
 
-  let total = 0;
-  for (let i = 0; i < grades.length; i++) {
-    let grade = parseFloat(grades[i].getAttribute("data-selected-value") || 0);
-    let weight = parseFloat(weights[i].getAttribute("data-selected-value") || 0);
-
-    total += grade + weight;
+  if (filledCount === 0) {
+    document.getElementById("gpaResult").innerText = "";
+  } else {
+    let gpa = total / filledCount;
+    document.getElementById("gpaResult").innerText = "GPA: " + gpa.toFixed(2);
   }
 
-  let gpa = total / grades.length;
-  document.getElementById("gpaResult").innerText = "GPA: " + gpa.toFixed(2);
+  saveGPAData();
 }

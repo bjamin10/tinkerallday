@@ -67,6 +67,19 @@ button:hover {
   opacity: 0.85;
 }
 
+.reset-btn {
+  margin-top: 0;
+  padding: 8px 14px;
+  background-color: #a3b18a;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.reset-btn:hover {
+  opacity: 0.75;
+  background-color: #8f9975;
+}
+
 input {
   display: block;
   width: 100%;
