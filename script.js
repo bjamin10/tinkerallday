@@ -62,7 +62,7 @@ function addClass() {
       </div>
     </div>
 
-    <button class="class-remove-btn" onclick="removeClassRow('${classId}')">✕</button>
+    <button class="class-remove-btn danger-btn" onclick="removeClassRow('${classId}')">✕</button>
   </div>
 `;
 
@@ -148,8 +148,6 @@ function renderSimulator() {
       <input type="number" id="categoryWeightInput" placeholder="Weight (%)" min="0" max="100">
       <button onclick="addCategory()">Add Category</button>
     </div>
-
-    <div style="margin-bottom: 25px;">
   `;
 
   // Generate category weighting chart
@@ -170,29 +168,27 @@ function renderSimulator() {
     html += `
       <div style="margin-bottom: 20px;">
         <h4 style="margin-top: 0;">Category Weighting</h4>
-        <div style="display: flex; align-items: flex-end; gap: 15px; height: 200px; border-bottom: 2px solid #ccc; padding-bottom: 10px; overflow-x: auto;">
+        <div class="weighting-chart">
     `;
 
-    // Draw bars for each category
-    categoryData.forEach((cat, idx) => {
-      const barHeight = (cat.weight / 100) * 150;
+    categoryData.forEach(cat => {
+      const barHeight = (cat.weight / 100) * 130;
       html += `
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-          <div style="background-color: ${cat.color}; width: 50px; height: ${barHeight}px; border-radius: 4px; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
-          <span style="font-size: 12px; font-weight: 600; color: #3e2f1c; text-align: center; width: 60px;">${cat.name.substring(0, 10)}</span>
-          <span style="font-size: 11px; color: #666; font-weight: 500;">${cat.weight.toFixed(1)}%</span>
+        <div class="weight-bar">
+          <div style="background-color: ${cat.color}; width: 40px; height: ${barHeight}px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+          <span>${cat.name}</span>
+          <span>${cat.weight.toFixed(1)}%</span>
         </div>
       `;
     });
 
-    // Draw total weight bar
-    const totalBarHeight = (totalWeight / 100) * 150;
+    const totalBarHeight = Math.min((totalWeight / 100) * 130, 130);
     let totalColor = totalWeight === 100 ? '#6a994e' : '#d4a574';
     html += `
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 5px; margin-left: 20px; padding-left: 20px; border-left: 2px solid #ddd;">
-        <div style="background-color: ${totalColor}; width: 50px; height: ${totalBarHeight}px; border-radius: 4px; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
-        <span style="font-size: 12px; font-weight: 600; color: #3e2f1c; text-align: center;">TOTAL</span>
-        <span style="font-size: 11px; color: #666; font-weight: 500;">${totalWeight.toFixed(1)}%</span>
+      <div class="weight-bar" style="margin-left: 20px; padding-left: 20px; border-left: 2px solid #ddd;">
+        <div style="background-color: ${totalColor}; width: 40px; height: ${totalBarHeight}px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+        <span style="font-weight: 600;">TOTAL</span>
+        <span>${totalWeight.toFixed(1)}%</span>
       </div>
     `;
 
@@ -202,78 +198,38 @@ function renderSimulator() {
     `;
   }
 
-  html += `
-    <div style="margin-bottom: 25px; padding: 15px; background-color: #f9f7f2; border-radius: 8px; border-left: 4px solid #a3b18a;">
-      <h4 style="margin-top: 0;">Category Progress</h4>
-  `;
-
-  let hasCats = Object.keys(categories).length > 0;
-  if (hasCats) {
-    for (let categoryName in categories) {
-      let category = categories[categoryName];
-      let totalPoints = 0;
-      let totalPossible = 0;
-
-      category.assignments.forEach(assignment => {
-        totalPoints += assignment.points;
-        totalPossible += assignment.pointsPossible;
-      });
-
-      let percentage = totalPossible > 0 ? (totalPoints / totalPossible) * 100 : 0;
-      let barColor = percentage >= 90 ? '#6a994e' : percentage >= 80 ? '#a3b18a' : percentage >= 70 ? '#d4a574' : '#c94c4c';
-
-      html += `
-        <div style="margin-bottom: 15px;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-            <span style="font-weight: 500;">${categoryName}</span>
-            <span style="font-weight: 600; color: ${barColor};">${percentage.toFixed(1)}%</span>
-          </div>
-          <div style="width: 100%; height: 20px; background-color: #e8e4db; border-radius: 4px; overflow: hidden;">
-            <div style="height: 100%; width: ${percentage}%; background-color: ${barColor}; transition: width 0.3s ease;"></div>
-          </div>
-        </div>
-      `;
-    }
-  } else {
-    html += `<p style="color: #999; font-size: 14px;">Add a category to see progress bars</p>`;
+  if (categoryData.length === 0) {
+    html += `<p style="color: #999; font-size: 14px; margin-bottom: 20px;">Start by adding one or more categories to see how they're weighted.</p>`;
   }
-
-  html += `
-    </div>
-  `;
 
   for (let categoryName in categories) {
     let category = categories[categoryName];
     html += `
-      <div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div class="category-card">
+        <div class="category-card-header">
           <h4>${categoryName} (${category.weight}% weight)</h4>
-          <button onclick="removeCategory('${categoryName}')" style="background-color: #c94c4c;">Delete</button>
+          <button class="danger-btn small-btn" onclick="removeCategory('${categoryName}')">Remove</button>
         </div>
-        
-        <div id="assignments-${categoryName}">
     `;
 
     category.assignments.forEach((assignment, index) => {
       html += `
-        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
-          <input type="number" value="${assignment.points}" 
-            onchange="updateAssignment('${categoryName}', ${index}, 'points', this.value)"
-            oninput="updateAssignment('${categoryName}', ${index}, 'points', this.value)"
-            placeholder="Points" style="width: 80px;">
-          <span>/</span>
-          <input type="number" value="${assignment.pointsPossible}" 
-            onchange="updateAssignment('${categoryName}', ${index}, 'pointsPossible', this.value)"
-            oninput="updateAssignment('${categoryName}', ${index}, 'pointsPossible', this.value)"
-            placeholder="Points Possible" style="width: 120px;">
-          <button onclick="removeAssignment('${categoryName}', ${index})" style="background-color: #e88888; padding: 8px 12px;">Remove</button>
+        <div class="assignment-row">
+          <div>
+            <label>Earned</label>
+            <input type="number" value="${assignment.points}" oninput="updateAssignment('${categoryName}', ${index}, 'points', this.value)" placeholder="Earned" />
+          </div>
+          <div>
+            <label>Possible</label>
+            <input type="number" value="${assignment.pointsPossible}" oninput="updateAssignment('${categoryName}', ${index}, 'pointsPossible', this.value)" placeholder="Possible" />
+          </div>
+          <button class="danger-btn small-btn" onclick="removeAssignment('${categoryName}', ${index})">Remove</button>
         </div>
       `;
     });
 
     html += `
-        </div>
-        <button onclick="addAssignment('${categoryName}')" style="margin-top: 10px; background-color: #8aaa4f;">Add Assignment</button>
+        <button onclick="addAssignment('${categoryName}')">Add Assignment</button>
       </div>
     `;
   }
