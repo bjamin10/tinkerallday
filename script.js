@@ -141,6 +141,7 @@ function resetSimulator() {
 }
 
 function renderSimulator() {
+  const categoryNames = Object.keys(categories).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
   let html = `
     <div style="margin-bottom: 20px;">
       <h3>Add Assignment Category</h3>
@@ -150,19 +151,31 @@ function renderSimulator() {
     </div>
   `;
 
-  // Generate category weighting chart
   let totalWeight = 0;
   const categoryData = [];
   const colors = ['#6a994e', '#8aaa4f', '#a3b18a', '#d4a574', '#c94c4c', '#9b7e6b'];
-  
-  for (let categoryName in categories) {
-    totalWeight += categories[categoryName].weight;
+
+  categoryNames.forEach((categoryName, index) => {
+    const category = categories[categoryName];
+    totalWeight += category.weight;
+
+    let totalPoints = 0;
+    let totalPossible = 0;
+    category.assignments.forEach(assignment => {
+      totalPoints += assignment.points;
+      totalPossible += assignment.pointsPossible;
+    });
+    const categoryPercent = totalPossible > 0 ? (totalPoints / totalPossible) * 100 : 0;
+    const contribution = (categoryPercent * category.weight) / 100;
+
     categoryData.push({
       name: categoryName,
-      weight: categories[categoryName].weight,
-      color: colors[Object.keys(categories).indexOf(categoryName) % colors.length]
+      weight: category.weight,
+      percent: categoryPercent,
+      contribution,
+      color: colors[index % colors.length]
     });
-  }
+  });
 
   if (categoryData.length > 0) {
     html += `
@@ -172,27 +185,28 @@ function renderSimulator() {
     `;
 
     categoryData.forEach(cat => {
-      const barHeight = (cat.weight / 100) * 130;
+      const weightHeight = (cat.weight / 100) * 130;
+      const percentHeight = (cat.percent / 100) * 130;
+      const contributionHeight = (cat.contribution / 100) * 130;
       html += `
-        <div class="weight-bar">
-          <div style="background-color: ${cat.color}; width: 40px; height: ${barHeight}px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
-          <span>${cat.name}</span>
-          <span>${cat.weight.toFixed(1)}%</span>
+        <div class="bar-group">
+          <div class="bars">
+            <div class="mini-bar" style="height: ${contributionHeight}px; background-color: #6a994e;" title="Contribution"></div>
+            <div class="mini-bar" style="height: ${weightHeight}px; background-color: ${cat.color};" title="Weight"></div>
+            <div class="mini-bar" style="height: ${percentHeight}px; background-color: #2f5069;" title="Category %"></div>
+          </div>
+          <div class="bar-label">${cat.name}</div>
+          <div class="bar-label">${cat.contribution.toFixed(1)}%</div>
         </div>
       `;
     });
 
-    const totalBarHeight = Math.min((totalWeight / 100) * 130, 130);
-    let totalColor = totalWeight === 100 ? '#6a994e' : '#d4a574';
     html += `
-      <div class="weight-bar" style="margin-left: 20px; padding-left: 20px; border-left: 2px solid #ddd;">
-        <div style="background-color: ${totalColor}; width: 40px; height: ${totalBarHeight}px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
-        <span style="font-weight: 600;">TOTAL</span>
-        <span>${totalWeight.toFixed(1)}%</span>
-      </div>
-    `;
-
-    html += `
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; font-size: 12px; color: #555;">
+          <span><span style="display:inline-block;width:10px;height:10px;background:#6a994e;border-radius:2px;margin-right:6px;vertical-align:middle;"></span>Contribution</span>
+          <span><span style="display:inline-block;width:10px;height:10px;background:#a3b18a;border-radius:2px;margin-right:6px;vertical-align:middle;"></span>Weight</span>
+          <span><span style="display:inline-block;width:10px;height:10px;background:#2f5069;border-radius:2px;margin-right:6px;vertical-align:middle;"></span>Category %</span>
         </div>
       </div>
     `;
@@ -202,7 +216,7 @@ function renderSimulator() {
     html += `<p style="color: #999; font-size: 14px; margin-bottom: 20px;">Start by adding one or more categories to see how they're weighted.</p>`;
   }
 
-  for (let categoryName in categories) {
+  categoryNames.forEach(categoryName => {
     let category = categories[categoryName];
     html += `
       <div class="category-card">
@@ -215,11 +229,12 @@ function renderSimulator() {
     category.assignments.forEach((assignment, index) => {
       html += `
         <div class="assignment-row">
-          <div>
+          <div class="input-block">
             <label>Earned</label>
             <input type="number" value="${assignment.points}" oninput="updateAssignment('${categoryName}', ${index}, 'points', this.value)" placeholder="Earned" />
           </div>
-          <div>
+          <div class="divider">/</div>
+          <div class="input-block">
             <label>Possible</label>
             <input type="number" value="${assignment.pointsPossible}" oninput="updateAssignment('${categoryName}', ${index}, 'pointsPossible', this.value)" placeholder="Possible" />
           </div>
@@ -232,7 +247,7 @@ function renderSimulator() {
         <button onclick="addAssignment('${categoryName}')">Add Assignment</button>
       </div>
     `;
-  }
+  });
 
   html += `<h3 id="simResult" style="margin-top: 20px;"></h3>`;
 
