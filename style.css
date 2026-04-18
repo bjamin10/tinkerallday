@@ -70,14 +70,14 @@ button:hover {
 .reset-btn {
   margin-top: 0;
   padding: 8px 14px;
-  background-color: #a3b18a;
+  background-color: #c94c4c;
   font-size: 13px;
   font-weight: 500;
 }
 
 .reset-btn:hover {
   opacity: 0.75;
-  background-color: #8f9975;
+  background-color: #b33d3d;
 }
 
 input {
